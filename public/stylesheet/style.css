@@ -1,0 +1,62 @@
+/*BODY*/
+body {
+  width: 100%;
+  font: 14px Helvetica, Arial, sans-serif;
+  min-height: 100vh;
+  margin: 0;
+}
+/*HEADER*/
+header{
+  text-align: center;
+  padding: 1em;
+  background-color: #81cbb0;
+}
+/*CONTAINER*/
+.container{
+  width: 90%;
+  margin-left: auto;
+  margin-right: auto;
+}
+/*BUTTON*/
+.erase{
+  padding: 0.5em;
+  background-color: cornsilk;
+  border-radius: 5px;
+  border: 1px solid;
+}
+.erase:hover{
+  background-color: red;
+}
+
+/*TABLE*/
+#resptable{
+  overflow-x: auto;
+}
+th,
+td {
+  padding: 15px;
+  text-align: left;
+}
+
+th {
+  text-align: center;
+  background-color: #04AA6D;
+  color: white;
+}
+
+tr td{
+  text-align: center;
+  border: 0.5px solid;
+}
+/*FOOTER*/
+footer{
+  text-align: center;
+  background-color: #81cbb0;
+  margin-top: 50px;
+  padding: 1em;
+}
+
+@media screen and (max-width: 800px) {
+
+
+}
