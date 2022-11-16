@@ -1,4 +1,4 @@
-"use strict"
+"use strict";
 
 let baseURL = "http://localhost:3000/courses/";
 
@@ -7,10 +7,11 @@ document.addEventListener("DOMContentLoaded", function(){
 //
 // Read and publish all courses 
     let url = baseURL;
-
+    //get the data from db
     fetch(url, {method: 'GET'})
         .then(response => response.text())
-            .then(data => {
+        .then(data => {
+                
                 let jsonData = JSON.parse( data );
 
                 let s = "<div id=resptable><table><th>ID</th><th>Kurskod</th><th>Kursnamn</th><th>Kursperiod</th><th>Ta bort kurs</th>";
@@ -22,9 +23,11 @@ document.addEventListener("DOMContentLoaded", function(){
                 let coursename = jsonData[i].courseName;
                 let courseperiod = jsonData[i].coursePeriod;
 
-                    s += `<tr><td>${id}</td><td>${courseid}</td><td>${coursename}</td><td>${courseperiod}</td><td><button class=erase id=${id}>Radera</button></td></tr>`;    
+                    s += `<tr><td>${id}</td><td>${courseid}</td><td>${coursename}</td><td>${courseperiod}</td><td><button class=erase id=${id}>Radera</button></td></tr>`;
+                    
                 }
                 s += "</table></div>";
+
                 document.getElementById("courselist").innerHTML = s;
              })
         .catch(error => {
@@ -37,7 +40,8 @@ document.getElementById("courselist").addEventListener("click", function(e){
     let url=baseURL+e.target.id;
     fetch(url, {method: 'DELETE'})
         .then(response => response.text())
-            .then(data => {
+        .then(data => {
+                //reaload the page with new content
                 location.reload();
              })
         .catch(error => {
