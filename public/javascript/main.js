@@ -37,7 +37,8 @@ document.addEventListener("DOMContentLoaded", function(){
 //
 // Create event handler for delete course
 document.getElementById("courselist").addEventListener("click", function(e){
-    let url=baseURL+e.target.id;
+    let url = baseURL + e.target.id;
+    //Delete a course depending on ID
     fetch(url, {method: 'DELETE'})
         .then(response => response.text())
         .then(data => {
