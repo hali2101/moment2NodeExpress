@@ -1,4 +1,5 @@
 var express = require('express');
+//creating an instance of the router
 var router = express.Router();
 
 //object with a courselist
@@ -45,7 +46,7 @@ router.get('/', function(req, res, next) {
 	for(var i=0; i < courses.length; i++){
 		if(courses[i]._id == id) del = i; // Find the array index that holds _id = id    
 	} 
-	if(del>=0) status=courses.splice(del, 1); // Delete element and fix array
+	if(del>=0) stat=courses.splice(del, 1); // Delete element and fix array
 
 	res.contentType('application/json');
 	res.send(id);
