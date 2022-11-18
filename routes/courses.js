@@ -7,7 +7,7 @@ const fs = require('fs/promises');
 /* GET complete courses listing. */
 router.get('/', function(req, res, next) {
 
-
+//read file and send parsed data
 fs.readFile('courses.json', 'utf-8')
   .then((data) => {
       res.send(JSON.parse(data));
@@ -49,7 +49,7 @@ router.delete('/:id', function (req, res, next) {
 		.then((data) => {
 			//parse to javascript object
 			var courses = JSON.parse(data);
-
+			//get id from parameter in url
 			var id = req.params.id;
 			var del = -1;
 
@@ -58,25 +58,26 @@ router.delete('/:id', function (req, res, next) {
 			}
 	
 			if (del >= 0) stat = courses.splice(del, 1); // Delete element and fix array
-			
+			//save new list in variable
 			var newCourseList = JSON.stringify(courses);
-
+			//write new list to JSON-file
 			fs.writeFile('courses.json', newCourseList, 'utf-8', function (err) {
 				if (err) throw err;
-				//Send response that registration was successfull.
-				res.send();
-			});
+				//Send response that registration was successfull and id.
+				res.send(id);
+				
+	});
 			
-
-fs.readFile('courses.json', 'utf-8')
-  .then((data) => {
-      res.send(JSON.parse(data));
-  })
-  .catch((error) => {
-    throw error; // Error 
-  });
-});
-
-  })
+	//read file again an send OK message
+	fs.readFile('courses.json', 'utf-8')
+		.then((data) => {
+			//send status-code and OK-message
+			res.status(200).send({"message" : "Course has been deleted."});
+  		})
+  		.catch((error) => {
+    		throw error; // Error 
+  		});
+	});
+})
 
 module.exports = router;
