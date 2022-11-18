@@ -43,6 +43,8 @@ document.getElementById("courselist").addEventListener("click", function(e){
     fetch(url, {method: 'DELETE'})
         .then(response => response.text())
         .then(data => {
+                //reload the page with new content
+                location.reload();
              })
         .catch(error => {
             alert('There was an error '+error);
