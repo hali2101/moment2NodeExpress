@@ -5,7 +5,7 @@
 ## Moment 2 - Node.js och Express
 
 Detta är en lösning för Moment 2 i kursen JavaScriptbaserad Webbutveckling.
-Det som ingår är en webbtjänst med hårdkodad data som sedan konsumeras av en webbplats.
+Det som ingår är en webbtjänst med tillhörande JSON-fil.
 
 Via API:et går det att läsa ut vilka kurser som ingår i programmet Webbutveckling vid Mittuniversitetet.
 Api:et kan anropas med localhost:3000/courses för att läsa ut alla kurser eller localhost:3000/courses/id för att läsa ut enskild kurs.
