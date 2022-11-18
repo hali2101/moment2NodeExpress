@@ -7,6 +7,7 @@ document.addEventListener("DOMContentLoaded", function(){
 //
 // Read and publish all courses 
     let url = baseURL;
+    
     //get the data from db
     fetch(url, {method: 'GET'})
         .then(response => response.text())
@@ -42,8 +43,6 @@ document.getElementById("courselist").addEventListener("click", function(e){
     fetch(url, {method: 'DELETE'})
         .then(response => response.text())
         .then(data => {
-                //reaload the page with new content
-                location.reload();
              })
         .catch(error => {
             alert('There was an error '+error);
