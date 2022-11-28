@@ -1,83 +1,100 @@
 var express = require('express');
-//creating an instance of the router
+//creating an instance of the app
 var router = express.Router();
 
-const fs = require('fs/promises');
+const bodyParser = require('body-parser');
+router.use(
+    bodyParser.urlencoded({
+      extended: true
+    })
+)
 
-/* GET complete courses listing. */
-router.get('/', function(req, res, next) {
+router.use(bodyParser.json());
 
-//read file and send parsed data
-fs.readFile('courses.json', 'utf-8')
-  .then((data) => {
-      res.send(JSON.parse(data));
-  })
-  .catch((error) => {
-    throw error; // Error 
-  });
-});
+/******* Connect to database with mongoose ********/
+var mongoose = require('mongoose');
+mongoose.connect('mongodb://localhost:27017/myCV', { useNewUrlParser: true, useUnifiedTopology: true });
+mongoose.Promise = global.Promise; // Global use of mongoose
 
-/* GET single course with ID */
- router.get('/:id', function(req, res, next) {
+var db = mongoose.connection;
+db.on('error', console.error.bind(console, 'connection error:'));
 
-fs.readFile('courses.json', 'utf-8')
-  .then((data) => {
-	//parse to javascript object
-	var courses = JSON.parse(data);
+db.once('open', function (callback) { // Add the listener for db events 
+	console.log("Connected to db");
 
-	var id = req.params.id;
-	var ind = -1;
+	// Create DB scheme 
+	var courseSchema = mongoose.Schema({
+		courseid: String,
+		coursename: String,
+		progression: String,
+		term: String,
+		syllabus: String
+	});
 
-	for(var i=0; i < courses.length; i++){
-		if (courses[i]._id == id)
-		ind = i; // Find the array index that holds _id = id   
-	} 
-	console.log(courses[ind]);
+	// Create scheme model
+	var Course = mongoose.model('Course', courseSchema)
 
-	res.send(ind>=0?courses[ind]:'{}'); // If we find the user id then return the course object otherwise return {}
-  })
-  .catch((error) => {
-    throw error; // Error 
-  });
+	/******* Get all courses ********/
+	router.get('/', function (req, res, next) {
 
- });
-
- /* DELETE course with unique ID */
-router.delete('/:id', function (req, res, next) {
-
-	fs.readFile('courses.json', 'utf-8')
-		.then((data) => {
-			//parse to javascript object
-			var courses = JSON.parse(data);
-			//get id from parameter in url
-			var id = req.params.id;
-			var del = -1;
-
-			for (var i = 0; i < courses.length; i++) {
-				if (courses[i]._id == id) del = i; // Find the array index that holds _id = id    
-			}
+		// Läs ut från databasen
+		Course.find(function (err, courses) {
+			if (err) return console.error(err);
+			var jsonObj = JSON.stringify(courses);
+			res.contentType('application/json');
+			res.send(jsonObj);
+		});
+	});
 	
-			if (del >= 0) stat = courses.splice(del, 1); // Delete element and fix array
-			//save new list in variable
-			var newCourseList = JSON.stringify(courses);
-			//write new list to JSON-file
-			fs.writeFile('courses.json', newCourseList, 'utf-8', function (err) {
-				if (err) throw err;
-				//Send response that registration was successfull and id.
-				res.send(id);
-				
+
+	/******* GET single course with ID ********/
+	router.get('/:id', function (req, res, next) {
+
+
 	});
-			
-	//read file again an send OK message
-	fs.readFile('courses.json', 'utf-8')
-		.then((data) => {
-			//send status-code and OK-message
-			res.status(200).send({"message" : "Course has been deleted."});
-  		})
-  		.catch((error) => {
-    		throw error; // Error 
-  		});
+
+	/******* ADD new course to database-list ********/
+	router.post('/', function (req, res, next) {
+
+		// Create new course
+		var course1 = new Course({
+			coursename: req.body.coursename,
+			courseid: req.body.coursenid,
+			progression: req.body.progression,
+			term: req.body.term,
+			syllabus: req.body.syllabus
+		});
+		console.log("test" + req.body.coursename);
+
+		// Save course to database
+		course1.save(function (err) {
+			if (err) return console.error(err);
+		});
+
+		var jsonObj = JSON.stringify(course1);
+		res.contentType('application/json');
+		res.send(jsonObj);
 	});
-})
+
+	/******* DELETE course with unique ID ********/
+	router.delete('/:id', function (req, res, next) {
+		var id = req.params.id;
+    
+		// Delete user _id from db
+		User.deleteOne({ "_id": id }, function (err) {
+			if (err) return handleError(err);
+		});
+    
+		// Get the new user list from db as response data
+		Course.find(function (err, courses) {
+			if (err) return console.error(err);
+    
+			var jsonObj = JSON.stringify(courses);
+			res.contentType('application/json');
+			res.send(jsonObj);
+		});
+	});
+
+});
 
 module.exports = router;
