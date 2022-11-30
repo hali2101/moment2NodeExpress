@@ -19,8 +19,25 @@
         <p>Kurser som ingår i programmet Webbutveckling vid Mittuniversitetet.</p>
         <!--Printing list of different courses with JavaScript-->
         <article id="courselist">
-
         </article>
+        <br>
+        <h2>Lägg till ny kurs</h2>
+        <div id="form">
+            <form id="newcourse" method="POST">
+                <label for="courseid">Kurskod:</label>
+                <input type="text" id="courseid">
+                <label for="coursename">Kursnamn:</label>
+                <input type="text" id="coursename">
+                <label for="progression">Progression:</label>
+                <input type="text" id="progression">
+                <label for="term">Termin:</label>
+                <input type="text" id="term">
+                <label for="syllabus">Kursplan:</label>
+                <input type="text" id="syllabus">
+                <button type="submit">Lägg till kurs</button>
+            </form>
+            <p id="msg"></p>
+        </div>
     </div>
     <footer>
         <p>Detta är en lösning skapad för Moment 2 i kursen JavaScriptbaserad webbutveckling.</p>

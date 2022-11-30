@@ -48,15 +48,33 @@ tr td{
   text-align: center;
   border: 0.5px solid;
 }
+/*MESSAGE*/
+#msg{
+  color: red;
+}
+/*FORM*/
+#form{
+  max-width: 600px;
+  margin-top: 20px;
+}
+#form input{
+    width: 100%;
+    padding: 0.5em;
+      margin: 8px 0;
+      box-sizing: border-box;
+}
+button{
+padding: 1em;
+background-color: rgb(94, 175, 247);
+border-radius: 10px;
+}
+button:hover {
+  background-color: rgb(37, 114, 182);
+}
 /*FOOTER*/
 footer{
   text-align: center;
   background-color: #81cbb0;
   margin-top: 50px;
   padding: 1em;
-}
-
-@media screen and (max-width: 800px) {
-
-
 }
