@@ -28,7 +28,7 @@ document.addEventListener("DOMContentLoaded", function () {
         let term = jsonData[i].term;
         let syllabus = jsonData[i].syllabus;
 
-        s += `<tr><td>${courseid}</td><td>${coursename}</td><td>${progression}</td><td>${term}</td><td>${syllabus}</td><td><button class=erase id=${id}>Radera</button></td></tr>`;
+        s += `<tr><td>${courseid}</td><td>${coursename}</td><td>${progression}</td><td>${term}</td><td><a href=${syllabus} target="_blank">Länk till kursplan</a></td><td><button class=erase id=${id}>Radera</button></td></tr>`;
       }
       s += "</table></div>";
 
